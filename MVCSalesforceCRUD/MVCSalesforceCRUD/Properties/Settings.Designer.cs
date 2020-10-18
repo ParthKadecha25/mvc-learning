@@ -22,15 +22,5 @@ namespace MVCSalesforceCRUD.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://login.salesforce.com/services/Soap/c/50.0")]
-        public string MVCSalesforceCRUD_SFWebReference_SforceService {
-            get {
-                return ((string)(this["MVCSalesforceCRUD_SFWebReference_SforceService"]));
-            }
-        }
     }
 }
