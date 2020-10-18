@@ -11,8 +11,8 @@
     </div>
 </div>
     <div class="row">
-        <form class="col-lg-12">
-            <form>
+        <div class="col-lg-12">
+            <div class="form">
                 @using (Html.BeginForm("Update", "Opportunities", null, FormMethod.Post, new { @class = "form-validate form-horizontal" }))
                 {
                     @Html.ValidationSummary(true)
@@ -50,23 +50,17 @@
                         <button class="btn btn-default" type="reset">Reset</button>
                     </div>
                 }
-            </form>
+            </div>
         </div>
     </div>
 
 <script>
     $(function () {
 
-        var closeDate = '@Model.CloseDate.ToString("dd/MMMM/yyyy")';
+        var closeDate = '@Model.CloseDate.ToString("dd/MM/yyyy")';
         $('#cclosedate').datepicker({
-            inline: true,
-            nextText: '&rarr;',
-            prevText: '&larr;',
-            showOtherMonths: true,
-            dateFormat: 'dd/MM/yy',
-            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            format: 'dd/mm/yyyy',
         });
-
         $("#cclosedate").val(closeDate);
 
         $('#StageName option').map(function () {

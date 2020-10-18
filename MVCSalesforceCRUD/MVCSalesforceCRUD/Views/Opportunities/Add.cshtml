@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        <form>
+        <div class="form">
             @using (Html.BeginForm("Add", "Opportunities", null, FormMethod.Post, new { @class = "form-validate form-horizontal" }))
             {
 
@@ -47,7 +47,7 @@
                     <button class="btn btn-default" type="reset">Reset</button>
                 </div>
             }
-        </form>
+        </div>
     </div>
 </div>
 
@@ -55,13 +55,8 @@
     $(function () {
         $('#cclosedate').datepicker({
             inline: true,
-            nextText: '&rarr;',
-            prevText: '&larr;',
-            showOtherMonths: true,
-            dateFormat: 'dd/MM/yy',
-            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            format: 'dd/mm/yyyy',
         });
-        $("#cclosedate").datepicker().datepicker("setDate", new Date());
     });
 </script>
 
