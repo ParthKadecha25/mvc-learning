@@ -2,7 +2,7 @@
 
 namespace MVCSalesforceCRUD.Models
 {
-    // Model for holding all Line item details
+    // Model for holding all line items for the oportunity
     public class OpportunityLineItems
     {
         public List<OpportunityLineItem> AllLineItems { get; set; }

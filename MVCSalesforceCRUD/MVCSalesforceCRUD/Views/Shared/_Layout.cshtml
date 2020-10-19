@@ -55,9 +55,11 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
+
         // Managing Delete operations
         var deleteOpportunityUrl = '@Url.Action("Delete","Opportunities")';
-        Main.Init(deleteOpportunityUrl);
+        var deleteOpportunityLineItemUrl = '@Url.Action("Delete", "OpportunityLineitems")';
+        Main.Init(deleteOpportunityUrl, deleteOpportunityLineItemUrl);
 
         // Managing Notification's display
         if ($("#notification-success").length > 0) {

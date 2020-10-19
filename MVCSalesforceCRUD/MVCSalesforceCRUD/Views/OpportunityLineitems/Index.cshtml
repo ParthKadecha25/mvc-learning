@@ -20,7 +20,6 @@
                 <tr>
                     <th>Name</th>
                     <th>Sales Price</th>
-                    <th>List Price</th>
                     <th>Quantity</th>
                     <th>Description</th>
                     <th>Action</th>
@@ -33,15 +32,14 @@
                         foreach (var lineitem in Model.AllLineItems)
                         {
                 <tr id="lineitem_@lineitem.Id">
-                    <td>@lineitem.PricebookEntryId</td>
+                    <td>@lineitem.Name</td>
                     <td>@lineitem.UnitPrice</td>
-                    <td>@lineitem.ListPrice</td>
                     <td>@lineitem.Quantity</td>
                     <td>@lineitem.Description</td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-success" id="@lineitem.Id" href="@Url.Action("Update", "LineItems", new { lineitem = lineitem.Id })">Update</a>
-                            <a class="btn btn-danger jsConfirmDeleteLineitem" id="@lineitem.Id" data-toggle="modal">Delete</a>
+                            <a class="btn btn-success" id="@lineitem.Id" href="@Url.Action("Update", "OpportunityLineitems", new { opportunityLineItem = lineitem.Id })">Update</a>
+                            <a class="btn btn-danger jsConfirmDelete" id="@lineitem.Id" data-itemtype="lineitem" data-toggle="modal">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -63,7 +61,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button id="btnDeleteLineitem" class="btn btn-danger">Delete</button>
+                        <button id="btnDelete" class="btn btn-danger">Delete</button>
                         <button id="btnLoader" style="display: none;" class="btn btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Please wait...</button>
                     </div>
                 </div>
@@ -92,31 +90,3 @@
         </div>
     </div>
 </div>
-<style>
-
-    .glyphicon-refresh-animate {
-        -animation: spin .7s infinite linear;
-        -webkit-animation: spin2 .7s infinite linear;
-    }
-
-    @@-webkit-keyframes spin2 {
-        from {
-            -webkit-transform: rotate(0deg);
-        }
-
-        to {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-
-    @@keyframes spin {
-        from {
-            transform: scale(1) rotate(0deg);
-        }
-
-        to {
-            transform: scale(1) rotate(360deg);
-        }
-    }
-</style>
-

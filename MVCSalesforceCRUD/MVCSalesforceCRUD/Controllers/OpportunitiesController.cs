@@ -126,13 +126,13 @@ namespace MVCSalesforceCRUD.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Delete(string opportunityId)
+        public async Task<JsonResult> Delete(string itemId)
         {
             SalesForceResponse sfResponse = new SalesForceResponse();
             try
             {
                 ForceClient client = await _client.CreateForceClient();
-                sfResponse = await _repository.DeleteOpportunity(client, opportunityId);
+                sfResponse = await _repository.DeleteOpportunity(client, itemId);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 ﻿using MVCSalesforceCRUD.Helpers;
 using MVCSalesforceCRUD.Models;
 using Salesforce.Force;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,25 +21,13 @@ namespace MVCSalesforceCRUD.Repository
         /// <returns>List of all opportunities</returns>
         public async Task<Opportunities> GetOpportunities(ForceClient client)
         {
-            Opportunities allOpportunities = new Opportunities();
-            var opportunities = await client.QueryAsync<Opportunity>("SELECT ID, Name, CloseDate, StageName, Type, Amount, Probability From Opportunity ORDER BY Name ASC");
-            if (opportunities.Records.Any())
+            Opportunities opportunities = new Opportunities();
+            var opportunityDetails = await client.QueryAsync<Opportunity>("SELECT ID, Name, CloseDate, StageName, Type, Amount, Probability, Pricebook2Id From Opportunity ORDER BY Name ASC");
+            if (opportunityDetails.Records.Any())
             {
-                foreach (Opportunity opportunity in opportunities.Records)
-                {
-                    allOpportunities.AllOpportunities.Add(new Opportunity
-                    {
-                        Id = opportunity.Id,
-                        Name = opportunity.Name,
-                        CloseDate = opportunity.CloseDate,
-                        StageName = opportunity.StageName,
-                        Type = opportunity.Type,
-                        Amount = opportunity.Amount,
-                        Probability = opportunity.Probability
-                    });
-                }
+                opportunities.AllOpportunities = opportunityDetails.Records;
             }
-            return allOpportunities;
+            return opportunities;
         }
 
         /// <summary>
@@ -53,13 +42,7 @@ namespace MVCSalesforceCRUD.Repository
             var opportunity = await client.QueryByIdAsync<Opportunity>(Constants.Opportunity, opportunityId);
             if (opportunity != null)
             {
-                opportunityModel.Id = opportunity.Id;
-                opportunityModel.StageName = opportunity.StageName;
-                opportunityModel.Type = opportunity.Type;
-                opportunityModel.Amount = opportunity.Amount;
-                opportunityModel.Name = opportunity.Name;
-                opportunityModel.Probability = opportunity.Probability;
-                opportunityModel.CloseDate = opportunity.CloseDate;
+                opportunityModel = opportunity;
             }
             return opportunityModel;
         }
@@ -129,18 +112,11 @@ namespace MVCSalesforceCRUD.Repository
             var lineitem = await client.QueryByIdAsync<OpportunityLineItem>(Constants.OpportunityLineItem, lineItemId);
             if (lineitem != null)
             {
-                lineitemModel.Id = lineitem.Id;
-                lineitemModel.Description = lineitem.Description;
-                lineitemModel.ListPrice = lineitem.ListPrice;
-                lineitemModel.Name = lineitem.Name;
-                lineitemModel.OpportunityId = lineitem.OpportunityId;
-                lineitemModel.Quantity = lineitem.Quantity;
-                lineitemModel.UnitPrice = lineitem.UnitPrice;
-                lineitemModel.PricebookEntryId = lineitem.PricebookEntryId;
+                lineitemModel = lineitem;
             }
             return lineitemModel;
         }
-        
+
         /// <summary>
         /// Getting line items associated with provided opportunity id
         /// </summary>
@@ -149,35 +125,19 @@ namespace MVCSalesforceCRUD.Repository
         /// <returns></returns>
         public async Task<OpportunityLineItems> GetOpportunityLineitems(ForceClient client, string opportunityId)
         {
-            OpportunityLineItems allLineitems = new OpportunityLineItems();
+            OpportunityLineItems lineItems = new OpportunityLineItems();
 
             // Getting opportunity details
             Opportunity opportunityDetails = await GetOpportunityById(client, opportunityId);
-            allLineitems.OpportunityDetails = opportunityDetails;
+            lineItems.OpportunityDetails = opportunityDetails;
 
             // Getting line items
             var lineitems = await client.QueryAsync<OpportunityLineItem>("SELECT ID, Name, UnitPrice, ListPrice, Quantity, Description, OpportunityId, PricebookEntryId From OpportunityLineItem WHERE OpportunityId='" + opportunityId + "' ORDER BY Name ASC");
             if (lineitems.Records.Any())
             {
-                foreach (OpportunityLineItem lineitem in lineitems.Records)
-                {
-                    // Getting associated opportunity details
-                    allLineitems.AllLineItems.Add(new OpportunityLineItem
-                    {
-                        Id = lineitem.Id,
-                        Description = lineitem.Description,
-                        ListPrice = lineitem.ListPrice,
-                        Name = lineitem.Name,
-                        OpportunityId = lineitem.OpportunityId,
-                        Quantity = lineitem.Quantity,
-                        UnitPrice = lineitem.UnitPrice,
-                        PricebookEntryId = lineitem.PricebookEntryId
-                    });
-                }
+                lineItems.AllLineItems = lineitems.Records;
             }
-            
-
-            return allLineitems;
+            return lineItems;
         }
 
         /// <summary>
@@ -227,6 +187,36 @@ namespace MVCSalesforceCRUD.Repository
                 IsSuccess = res,
                 Details = res ? Constants.MsgOpportunityLineItemDeleteSuccess : Constants.MsgOpportunityLineItemDeleteFailed,
             };
+        }
+
+        #endregion
+
+        #region "Products"
+        
+        /// <summary>
+        /// Getting all current existing Products
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="opportunityPriceBookID"></param>
+        /// <returns></returns>
+        public async Task<Products> GetProductDetails(ForceClient client, string opportunityPriceBookID)
+        {
+            Products products = new Products();
+            var productsInfo = await client.QueryAsync<Product>("SELECT Name From Product2 ORDER BY Name ASC");
+            if (productsInfo.Records.Any())
+            {
+                foreach (Product product in productsInfo.Records)
+                {
+                    // Getting each product details
+                    var productDetails = await client.QueryAsync<Product>("SELECT Id, Pricebook2Id, Product2Id, UnitPrice, Name From PricebookEntry WHERE Name='" + product.Name + "'AND Pricebook2Id='" + opportunityPriceBookID + "' ORDER BY Name ASC");
+                    if (productDetails.Records.Any())
+                    {
+                        // Getting only first, as it will have all required info which we need
+                        products.AllProducts.Add(productDetails.Records[0]);
+                    }
+                }
+            }
+            return products;
         }
 
         #endregion

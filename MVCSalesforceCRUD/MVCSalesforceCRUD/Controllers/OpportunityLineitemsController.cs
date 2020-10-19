@@ -10,7 +10,9 @@ using static MVCSalesforceCRUD.Helpers.Enums;
 
 namespace MVCSalesforceCRUD.Controllers
 {
-    // For managing the opportunities
+    /// <summary>
+    /// For Managing Opportunity Lineitems
+    /// </summary>
     public class OpportunityLineitemsController : Controller
     {
         private readonly SalesForceService _client; // Responsible for generating force client to perform Salesforce operations
@@ -39,9 +41,12 @@ namespace MVCSalesforceCRUD.Controllers
         }
 
         [HttpGet]
-        public ActionResult Add()
+        public async Task<ActionResult> Add()
         {
-            return View("Add");
+            ForceClient client = await _client.CreateForceClient();
+            Opportunity opportunity = await _repository.GetOpportunityById(client, Request.QueryString["opportunityId"]);
+            Products products = await _repository.GetProductDetails(client, opportunity.Pricebook2Id);
+            return View("Add", products);
         }
 
         [HttpPost]
@@ -61,7 +66,7 @@ namespace MVCSalesforceCRUD.Controllers
                     : NotificationType.Error.ToString();
 
                 TempData["Notification"] = sfResponse.Details;
-                return RedirectToAction("Index", "OpportunityLineitems");
+                return RedirectToAction("Index", "OpportunityLineitems", new { opportunityId = input.OpportunityId });
             }
 
             // In case the model has no valid data
@@ -96,8 +101,10 @@ namespace MVCSalesforceCRUD.Controllers
                 ForceClient client = await _client.CreateForceClient();
                 
                 // Need to provide opporunity line item id seperately
-                var opportunityLineItemId = input.Id;
+                string opportunityLineItemId = input.Id;
                 input.Id = null;
+                string opportunityId = input.OpportunityId;
+                input.OpportunityId = null;
 
                 // Updating the opportunity line item
                 sfResponse = await _repository.UpdateOpportunityLineItem(client, opportunityLineItemId, input);
@@ -107,7 +114,8 @@ namespace MVCSalesforceCRUD.Controllers
                     ? NotificationType.Success.ToString()
                     : NotificationType.Error.ToString();
                 TempData["Notification"] = sfResponse.Details;
-                return RedirectToAction("Index", "OpportunityLineitems");
+
+                return RedirectToAction("Index", "OpportunityLineitems", new { opportunityId = opportunityId });
             }
 
             // Case when model has invalid data
@@ -118,13 +126,13 @@ namespace MVCSalesforceCRUD.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Delete(string opportunityLineItemId)
+        public async Task<JsonResult> Delete(string itemId)
         {
             SalesForceResponse sfResponse = new SalesForceResponse();
             try
             {
                 ForceClient client = await _client.CreateForceClient();
-                sfResponse = await _repository.DeleteOpportunityLineItem(client, opportunityLineItemId);
+                sfResponse = await _repository.DeleteOpportunityLineItem(client, itemId);
             }
             catch (Exception ex)
             {

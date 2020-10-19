@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCSalesforceCRUD.Models
@@ -8,23 +9,33 @@ namespace MVCSalesforceCRUD.Models
     /// </summary>
     public class Opportunity
     {
-        public string Id { get; set; } // ID of the opportunity
+        [Description("ID of the opportunity")]
+        public string Id { get; set; } // 
         
         [Required]
-        public string Name { get; set; } //Name of the Opportunity
+        [Description("Name of the Opportunity")]
+        public string Name { get; set; }
 
         [Required]
-        public DateTime CloseDate { get; set; } //The closing date of the Opportunity
+        [Description("The closing date of the Opportunity")]
+        public DateTime CloseDate { get; set; }
         
         [Range(1,100)]
-        public double Probability { get; set; } //The probability of the Opportunity being successful
+        [Description("The probability of the Opportunity being successful")]
+        public double Probability { get; set; }
 
         [Required]
-        public string Amount { get; set; } //The amount the Opportunity is potentially worth
+        [Description("The amount the Opportunity is potentially worth")]
+        public string Amount { get; set; }
 
-        public string Type { get; set; } // Type of Opportunity
+        [Description("Type of Opportunity")]
+        public string Type { get; set; }
 
-        public string StageName { get; set; } // The stage at which the Opportunity is currently at. 
+        [Description("The stage at which the Opportunity is currently at. ")]
+        public string StageName { get; set; }
+
+        [Description("Pricebook ID associated with the opportunity")]
+        public string Pricebook2Id { get; set; }
 
     }
 }

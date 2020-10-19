@@ -9,18 +9,13 @@ namespace MVCSalesforceCRUD.Models
         [Description("Line item unique id")]
         public string Id {get; set;}
 
-        [Required]
         [Description("Opportunity Product / Line item name")]
         public string Name { get; set; }
 
         [Description("This is the Sales Price of the Product")]
         [Required] // As we are not using Total Price
         public string UnitPrice { get; set; }
-
-        [Required]
-        [Description("This is the List Price of the Product")]
-        public double ListPrice { get; set; }
-
+        
         [Required]
         [Description("This is the quantity of this line item for the opportunity")]
         public double Quantity { get; set; }
@@ -28,12 +23,9 @@ namespace MVCSalesforceCRUD.Models
         [Description("Detailed description of the line item")]
         public string Description { get; set; }
 
-        
-        [Required]
         [Description("ID of the associated Opportunity")]
         public string OpportunityId { get; set; }
 
-        [Required]
         [Description("ID of the associated PricebookEntry")]
         public string PricebookEntryId { get; set; }
     }
