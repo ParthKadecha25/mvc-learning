@@ -163,6 +163,18 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="GithubAssets\10-OpportunitiesInSalesForce.JPG" />
+    <Content Include="GithubAssets\11-LineItemsInSalesForce.JPG" />
+    <Content Include="GithubAssets\2-CreateNewOpportunity.JPG" />
+    <Content Include="GithubAssets\3-CreateNewOpportunity-Success.JPG" />
+    <Content Include="GithubAssets\4-UpdateOpportunity.JPG" />
+    <Content Include="GithubAssets\5-DeleteOpportunityConfirmation.JPG" />
+    <Content Include="GithubAssets\6-CreateLineItem.JPG" />
+    <Content Include="GithubAssets\7-ViewAllLineItems.JPG" />
+    <Content Include="GithubAssets\8-UpdateLineItem.JPG" />
+    <Content Include="GithubAssets\9-DeleteLineItemConfirmation.JPG" />
+    <Content Include="GithubAssets\Homepage.JPG" />
+    <Content Include="GithubAssets\Webconfig-keys.JPG" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\Settings.settings">
@@ -194,7 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="GithubAssets\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

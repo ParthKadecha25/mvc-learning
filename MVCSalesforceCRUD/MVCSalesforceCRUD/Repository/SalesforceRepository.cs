@@ -207,8 +207,13 @@ namespace MVCSalesforceCRUD.Repository
             {
                 foreach (Product product in productsInfo.Records)
                 {
+                    string queryPart = "";
+                    if (!string.IsNullOrWhiteSpace(opportunityPriceBookID))
+                    {
+                        queryPart = " AND Pricebook2Id='" + opportunityPriceBookID + "'";
+                    }
                     // Getting each product details
-                    var productDetails = await client.QueryAsync<Product>("SELECT Id, Pricebook2Id, Product2Id, UnitPrice, Name From PricebookEntry WHERE Name='" + product.Name + "'AND Pricebook2Id='" + opportunityPriceBookID + "' ORDER BY Name ASC");
+                    var productDetails = await client.QueryAsync<Product>("SELECT Id, Pricebook2Id, Product2Id, UnitPrice, Name From PricebookEntry WHERE Name='" + product.Name + "'" + queryPart + " ORDER BY Name ASC");
                     if (productDetails.Records.Any())
                     {
                         // Getting only first, as it will have all required info which we need
