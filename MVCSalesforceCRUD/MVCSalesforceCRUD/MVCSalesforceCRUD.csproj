@@ -190,9 +190,11 @@
     <Content Include="Views\OpportunityLineitems\Index.cshtml" />
     <Content Include="Views\OpportunityLineitems\Add.cshtml" />
     <Content Include="Views\OpportunityLineitems\Update.cshtml" />
+    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="GithubAssets\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
