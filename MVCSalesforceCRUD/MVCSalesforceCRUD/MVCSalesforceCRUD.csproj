@@ -135,6 +135,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\OpportunityLineitemsController.cs" />
     <Compile Include="Controllers\OpportunitiesController.cs" />
     <Compile Include="Repository\SalesforceRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -143,8 +144,8 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\GlobalHelper.cs" />
-    <Compile Include="Models\LineItems.cs" />
-    <Compile Include="Models\LineItem.cs" />
+    <Compile Include="Models\OpportunityLineItems.cs" />
+    <Compile Include="Models\OpportunityLineItem.cs" />
     <Compile Include="Models\Opportunity.cs" />
     <Compile Include="Models\Opportunities.cs" />
     <Compile Include="Models\SalesForceResponse.cs" />
@@ -184,6 +185,8 @@
     <Content Include="Views\Opportunities\Add.cshtml" />
     <Content Include="Views\Opportunities\Index.cshtml" />
     <Content Include="Views\Opportunities\Update.cshtml" />
+    <Content Include="Views\OpportunityLineitems\Index.cshtml" />
+    <Content Include="Views\OpportunityLineitems\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

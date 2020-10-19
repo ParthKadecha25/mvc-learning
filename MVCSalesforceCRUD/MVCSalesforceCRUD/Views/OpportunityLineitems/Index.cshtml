@@ -1,38 +1,47 @@
-﻿@model MVCSalesforceCRUD.Models.Opportunities
+﻿@model MVCSalesforceCRUD.Models.OpportunityLineItems
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row my-3">
     <div class="col-lg-3">
-        <a href="@Url.Action("Add", "Opportunities")" class="btn btn-primary btn-lg">Add new Opportunity</a>
+        <a href="@Url.Action("Add", "OpportunityLineitems", new { opportunityId = Request.QueryString["opportunityId"]})" class="btn btn-primary btn-lg">Add new Line item</a>
     </div>
 </div>
+<div class="row my-3">
+    <div class="col-lg-12">
+        <h4><b>Opportunity:</b> @Model.OpportunityDetails.Name </h4>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-12">
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th>Opportunity Name</th>
-                    <th>Type</th>
-                    <th>Stage</th>
+                    <th>Name</th>
+                    <th>Sales Price</th>
+                    <th>List Price</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @{
-                    if (Model.AllOpportunities.Any())
+                    if (Model.AllLineItems.Any())
                     {
-                        foreach (var opportunity in Model.AllOpportunities)
+                        foreach (var lineitem in Model.AllLineItems)
                         {
-                <tr id="opportunity_@opportunity.Id">
-                    <td>@opportunity.Name</td>
-                    <td>@opportunity.Type</td>
-                    <td>@opportunity.StageName</td>
+                <tr id="lineitem_@lineitem.Id">
+                    <td>@lineitem.PricebookEntryId</td>
+                    <td>@lineitem.UnitPrice</td>
+                    <td>@lineitem.ListPrice</td>
+                    <td>@lineitem.Quantity</td>
+                    <td>@lineitem.Description</td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-success" id="@opportunity.Id" href="@Url.Action("Update", "Opportunities", new { opportunity = opportunity.Id })">Update</a>
-                            <a class="btn btn-danger jsConfirmDeleteOpportunity" id="@opportunity.Id" data-toggle="modal">Delete</a>
-                            <a class="btn btn-secondary" href="@Url.Action("Index", "OpportunityLineitems", new { opportunityId = opportunity.Id })">Manage Lineitems</a>
+                            <a class="btn btn-success" id="@lineitem.Id" href="@Url.Action("Update", "LineItems", new { lineitem = lineitem.Id })">Update</a>
+                            <a class="btn btn-danger jsConfirmDeleteLineitem" id="@lineitem.Id" data-toggle="modal">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -46,15 +55,15 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Delete Opportunity?</h4>
+                        <h4 class="modal-title" id="myModalLabel">Delete Lineitem?</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure want to delete opportunity from Salesforce?</p>
+                        <p>Are you sure want to delete this lineitem from Salesforce?</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button id="btnDeleteOpportunity" class="btn btn-danger">Delete</button>
+                        <button id="btnDeleteLineitem" class="btn btn-danger">Delete</button>
                         <button id="btnLoader" style="display: none;" class="btn btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Please wait...</button>
                     </div>
                 </div>
@@ -64,7 +73,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Opportunity Deleted</h4>
+                        <h4 class="modal-title">Lineitem Deleted</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">

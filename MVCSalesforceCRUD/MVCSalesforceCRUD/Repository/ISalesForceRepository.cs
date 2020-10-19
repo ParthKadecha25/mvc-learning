@@ -18,5 +18,15 @@ namespace MVCSalesforceCRUD.Repository
         Task<SalesForceResponse> DeleteOpportunity(ForceClient client, string opportunityId);
 
         #endregion
+
+        #region "Opportunity Line items"
+
+        Task<OpportunityLineItems> GetOpportunityLineitems(ForceClient client, string opportunityId);
+        Task<OpportunityLineItem> GetOpportunityLineItemById(ForceClient client, string lineItemId);
+        Task<SalesForceResponse> CreateOpportunityLineItem(ForceClient client, OpportunityLineItem opportunityLineItem);
+        Task<SalesForceResponse> UpdateOpportunityLineItem(ForceClient client, string lineItemId, OpportunityLineItem opportunityLineItem);
+        Task<SalesForceResponse> DeleteOpportunityLineItem(ForceClient client, string opportunityLineItemId);
+        
+        #endregion
     }
 }

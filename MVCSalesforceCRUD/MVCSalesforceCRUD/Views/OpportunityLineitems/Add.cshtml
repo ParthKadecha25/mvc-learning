@@ -1,0 +1,51 @@
+﻿@using MVCSalesforceCRUD.Helpers
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row my-3">
+    <div class="col-lg-12">
+        <h2>Create new Line item</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form">
+            @using (Html.BeginForm("Add", "OpportunityLineitems", null, FormMethod.Post, new { @class = "form-validate form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" id="hdnOpportunityId" name="OpportunityId" value="@Request.QueryString["opportunityId"]" />
+
+                <div class="form-group ">
+                    <label for="cname" class="control-label">Name <span class="required">*</span></label>
+                    <input class="form-control" id="cname" name="name" type="text" required />
+                </div>
+                <div class="form-group ">
+                    <label for="cunitprice" class="control-label">Unit Price (Sales Price) <span class="required">*</span></label>
+                    <input class="form-control " id="cunitprice" type="text" name="unitprice" />
+                </div>
+                <div class="form-group ">
+                    <label for="clistprice" class="control-label">List Price <span class="required">*</span></label>
+                    <input class="form-control " id="clistprice" type="text" name="listprice" />
+                </div>
+                <div class="form-group ">
+                    <label for="cquantity" class="control-label">Quantity<span class="required">*</span></label>
+                    <input class="form-control " id="cquantity" type="text" name="quantity" />
+                </div>
+                <div class="form-group ">
+                    <label for="cdescription" class="control-label">Description</label>
+                    <textarea class="form-control" id="cdescription" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-default" type="reset">Reset</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
